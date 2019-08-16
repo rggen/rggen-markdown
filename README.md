@@ -1,39 +1,43 @@
-# Rggen::Markdown
+[![Build Status](https://travis-ci.com/rggen/rggen-markdown.svg?branch=master)](https://travis-ci.com/rggen/rggen-markdown)
+[![Maintainability](https://api.codeclimate.com/v1/badges/5bbd7d84fefb30c5ee9a/maintainability)](https://codeclimate.com/github/rggen/rggen-markdown/maintainability)
+[![codecov](https://codecov.io/gh/rggen/rggen-markdown/branch/master/graph/badge.svg)](https://codecov.io/gh/rggen/rggen-markdown)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=rggen_rggen-markdown&metric=alert_status)](https://sonarcloud.io/dashboard?id=rggen_rggen-markdown)
+[![Gitter](https://badges.gitter.im/rggen/rggen.svg)](https://gitter.im/rggen/rggen?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rggen/markdown`. To experiment with that code, run `bin/console` for an interactive prompt.
+# RgGen::Markdown
 
-TODO: Delete this and the text above, and describe your gem
+RgGen::Markdown provides features listed below:
+
+* Structure of Markdown writer for RgGen
+* Convinience APIs for Markdown code
 
 ## Installation
 
-Add this line to your application's Gemfile:
+During RgGen installation, RgGen::Markdown will also be installed automatically.
 
-```ruby
-gem 'rggen-markdown'
+```
+$ gem install rggen
 ```
 
-And then execute:
+If you to install RgGen::Markdown only, use the command below:
 
-    $ bundle
+```
+$ gem install rggen-markdown
+```
 
-Or install it yourself as:
+## Contact
 
-    $ gem install rggen-markdown
+Feedbacks, bug reports, questions and etc. are wellcome! You can post them by using following ways:
 
-## Usage
+* [GitHub Issue Tracker](https://github.com/rggen/rggen-markdown/issues)
+* [Chat Room](https://gitter.im/rggen/rggen)
+* [Mailing List](https://groups.google.com/d/forum/rggen)
+* [Mail](mailto:rggen@googlegroups.com)
 
-TODO: Write usage instructions here
+## Copyright & License
 
-## Development
+Copyright &copy; 2019 Taichi Ishitani. RgGen::Markdown is licensed under the [MIT License](https://opensource.org/licenses/MIT), see [LICENSE](LICENSE) for futher details.
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+## Code of Conduct
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/rggen-markdown.
-
-## License
-
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+Everyone interacting in the RgGen project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/rggen/rggen-markdown/blob/master/CODE_OF_CONDUCT.md).
