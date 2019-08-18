@@ -4,7 +4,7 @@ require 'ruport'
 require 'ruport/wiki_table_formatter'
 
 require_relative 'markdown/version'
-
+require_relative 'markdown/utility/source_file'
 require_relative 'markdown/utility'
 require_relative 'markdown/component'
 require_relative 'markdown/feature'
