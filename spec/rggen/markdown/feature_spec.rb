@@ -80,4 +80,17 @@ RSpec.describe RgGen::Markdown::Feature do
       expect(components[3].anchor_id).to eq 'foo-bar-baz-qux'
     end
   end
+
+  it 'ERB形式のテンプレートを処理できる' do
+    path = File.join(__dir__, 'foo.erb')
+    allow(File).to receive(:binread).with(path).and_return('<%= object_id %> <%= foo %>')
+
+    component = RgGen::Markdown::Component.new(nil, configuration, register_map)
+    feature = create_feature(component) do
+      def foo; 'foo !'; end
+      main_code :test, from_template: path
+    end
+
+    expect(feature.generate_code(:main_code, :test)).to match_string("#{feature.object_id} foo !")
+  end
 end
