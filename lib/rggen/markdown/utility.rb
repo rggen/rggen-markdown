@@ -32,7 +32,7 @@ module RgGen
         table = Ruport.Table(column_names) do |t|
           rows.each { |row| t << row }
         end
-        table.to_markdown.chomp
+        table.to_markdown(io: +'').chomp
       end
     end
   end
