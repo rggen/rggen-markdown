@@ -11,21 +11,12 @@ module RgGen
 
       private
 
-      def anchor(component_or_id)
-        "<div id=\"#{get_anchor_id(component_or_id)}\"></div>"
+      def anchor(id)
+        "<div id=\"#{id}\"></div>"
       end
 
-      def anchor_link(text, target)
-        "[#{text}](##{get_anchor_id(target)})"
-      end
-
-      def get_anchor_id(component_or_id)
-        case component_or_id
-        when Component
-          component_or_id.anchor_id
-        else
-          component_or_id
-        end
+      def anchor_link(text, id)
+        "[#{text}](##{id})"
       end
 
       def table(column_names, rows)
