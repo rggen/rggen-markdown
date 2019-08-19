@@ -19,13 +19,13 @@ RSpec.describe RgGen::Markdown::Utility do
 
   describe '#create_blank_file' do
     it '空のソースファイルオブジェクトを生成する' do
-      source_file = md.send(:create_blank_file, 'foo.md')
+      source_file = md.create_blank_file('foo.md')
       expect(source_file).to be_kind_of RgGen::Markdown::Utility::SourceFile
       expect(source_file.to_code).to match_string('')
     end
 
     specify '生成されたソースファイルオブジェクトは#include_guard/#include_files/#include_fileを持たない' do
-      source_file = md.send(:create_blank_file, 'foo.md')
+      source_file =  md.create_blank_file('foo.md')
       expect { source_file.include_guard }.to raise_error NoMethodError
       expect { source_file.include_files }.to raise_error NoMethodError
       expect { source_file.include_file }.to raise_error NoMethodError

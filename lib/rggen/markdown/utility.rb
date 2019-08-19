@@ -5,11 +5,11 @@ module RgGen
     module Utility
       include Core::Utility::CodeUtility
 
-      private
-
       def create_blank_file(path)
         SourceFile.new(path)
       end
+
+      private
 
       def anchor(component_or_id)
         "<div id=\"#{get_anchor_id(component_or_id)}\"></div>"
