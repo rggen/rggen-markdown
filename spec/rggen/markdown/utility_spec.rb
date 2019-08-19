@@ -33,40 +33,14 @@ RSpec.describe RgGen::Markdown::Utility do
   end
 
   describe '#anchor' do
-    context '引数がコンポーネントの場合' do
-      before do
-        create_feature { anchor_id { 'anchor' } }
-      end
-
-      it '#anchor_idの戻り値をIDとする、アンカーを返す' do
-        expect(component).to receive(:anchor_id).and_call_original
-        expect(md.send(:anchor, component)).to eq '<div id="anchor"></div>'
-      end
-    end
-
-    context '引数がコンポーネントではない場合' do
-      it '引数をIDとする、アンカーを返す' do
-        expect(md.send(:anchor, 'anchor')).to eq '<div id="anchor"></div>'
-      end
+    it 'アンカーを返す' do
+      expect(md.send(:anchor, 'anchor')).to eq '<div id="anchor"></div>'
     end
   end
 
   describe '#anchor_link' do
-    context '与えられたリンク先がコンポーネントの場合' do
-      before do
-        create_feature { anchor_id { 'anchor' } }
-      end
-
-      it '#anchor_idの戻り値をIDとする、アンカーリンクを返す' do
-        expect(component).to receive(:anchor_id).and_call_original
-        expect(md.send(:anchor_link, 'a link', component)).to eq '[a link](#anchor)'
-      end
-    end
-
-    context '与えられたリンク先がコンポーネントではない場合' do
-      it '与えられたリンク先をIDとする、アンカーリンクを返す' do
-        expect(md.send(:anchor_link, 'a link', 'anchor')).to eq '[a link](#anchor)'
-      end
+    it 'アンカーリンクを返す' do
+      expect(md.send(:anchor_link, 'a link', 'anchor')).to eq '[a link](#anchor)'
     end
   end
 
