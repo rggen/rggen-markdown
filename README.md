@@ -7,10 +7,7 @@
 
 # RgGen::Markdown
 
-RgGen::Markdown provides features listed below:
-
-* Structure of Markdown writer for RgGen
-* Convinience APIs for Markdown code
+RgGen::Markdown provides Markdown generator for RgGen.
 
 ## Installation
 
