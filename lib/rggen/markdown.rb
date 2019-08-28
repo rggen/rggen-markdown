@@ -12,7 +12,12 @@ require_relative 'markdown/factories'
 
 module RgGen
   module Markdown
-    def self.setup(builder)
+    FEATURES = [
+      'markdown/register/markdown',
+      'markdown/register_block/markdown'
+    ].freeze
+
+    def self.register_component(builder)
       builder.output_component_registry(:markdown) do
         register_component [
           :register_map, :register_block, :register, :bit_field
@@ -22,7 +27,14 @@ module RgGen
         end
       end
     end
-  end
 
-  setup :markdown, Markdown
+    def self.load_features
+      FEATURES.each { |feature| require_relative feature }
+    end
+
+    def self.default_setup(builder)
+      register_component(builder)
+      load_features
+    end
+  end
 end
