@@ -19,6 +19,7 @@ RSpec.describe RgGen::Markdown do
       expect(builder).to receive(:enable).with(:register_block, [:markdown])
       expect(builder).to receive(:enable).with(:register, [:markdown])
       require 'rggen/markdown/setup'
+      builder.activate_plugins
     end
   end
 end
