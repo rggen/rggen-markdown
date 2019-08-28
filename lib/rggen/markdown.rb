@@ -31,5 +31,10 @@ module RgGen
     def self.load_features
       FEATURES.each { |feature| require_relative feature }
     end
+
+    def self.default_setup(builder)
+      register_component(builder)
+      load_features
+    end
   end
 end
