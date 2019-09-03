@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
 
   spec.summary = "rggen-markdown-#{RgGen::Markdown::VERSION}"
   spec.description = <<~'DESCRIPTION'
-    Structure of Markdown writer for RgGen
+    Markdown generator for RgGen.
   DESCRIPTION
   spec.homepage = 'https://github.com/rggen/rggen-markdown'
   spec.license = 'MIT'
