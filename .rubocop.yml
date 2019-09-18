@@ -20,6 +20,9 @@ Metrics/BlockLength:
     - define_simple_feature
     - markdown
 
+Metrics/LineLength:
+  Max: 90
+
 Style/Alias:
   EnforcedStyle: prefer_alias_method
 
