@@ -45,7 +45,7 @@ RSpec.describe 'register_block/markdown' do
       RgGen.enable(:register, [:name, :offset_address, :size, :type])
       RgGen.enable(:register, :type, [:external, :indirect])
       RgGen.enable(:bit_field, [:name, :bit_assignment, :type, :initial_value, :reference, :comment])
-      RgGen.enable(:bit_field, :type, [:rc, :reserved, :ro, :rof, :rs, :rw, :rwc, :rwe, :rwl, :rws, :w0c, :w1c, :w0s, :w1s, :w0trg, :w1trg, :wo])
+      RgGen.enable(:bit_field, :type, [:rc, :reserved, :ro, :rof, :rs, :rw, :rwc, :rwe, :rwl, :rws, :w0c, :w1c, :w0s, :w1s, :w0crs, :w1crs, :w0src, :w1src, :w0trg, :w1trg, :wo])
     end
 
     after(:all) do
@@ -55,7 +55,7 @@ RSpec.describe 'register_block/markdown' do
       RgGen.disable(:register, [:name, :offset_address, :size, :type])
       RgGen.disable(:register, :type, [:external, :indirect])
       RgGen.disable(:bit_field, [:name, :bit_assignment, :type, :initial_value, :reference, :comment])
-      RgGen.disable(:bit_field, :type, [:rc, :reserved, :ro, :rof, :rs, :rw, :rwc, :rwe, :rwl, :w0c, :w1c, :w0s, :w1s, :w0trg, :w1trg, :wo])
+      RgGen.disable(:bit_field, :type, [:rc, :reserved, :ro, :rof, :rs, :rw, :rwc, :rwe, :rwl, :w0c, :w1c, :w0s, :w1s, :w0crs, :w1crs, :w0src, :w1src, :w0trg, :w1trg, :wo])
     end
 
     before do
