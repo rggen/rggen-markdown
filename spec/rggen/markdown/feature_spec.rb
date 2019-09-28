@@ -10,7 +10,7 @@ RSpec.describe RgGen::Markdown::Feature do
   end
 
   def create_feature(component, &body)
-    Class.new(described_class, &body).new(component, :foo) do |f|
+    Class.new(described_class, &body).new(:foo, nil, component) do |f|
       component.add_feature(f)
     end
   end
