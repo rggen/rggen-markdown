@@ -2,11 +2,11 @@
 
 RSpec.describe RgGen::Markdown::Feature do
   let(:configuration) do
-    RgGen::Core::Configuration::Component.new(nil)
+    RgGen::Core::Configuration::Component.new('configuration', nil)
   end
 
   let(:register_map) do
-    RgGen::Core::RegisterMap::Component.new(nil, configuration)
+    RgGen::Core::RegisterMap::Component.new('register_map', nil, configuration)
   end
 
   def create_feature(component, &body)
@@ -19,7 +19,7 @@ RSpec.describe RgGen::Markdown::Feature do
     path = File.join(__dir__, 'foo.erb')
     allow(File).to receive(:binread).with(path).and_return('<%= object_id %> <%= foo %>')
 
-    component = RgGen::Markdown::Component.new(nil, configuration, register_map)
+    component = RgGen::Markdown::Component.new('markdown', nil, configuration, register_map)
     feature = create_feature(component) do
       def foo; 'foo !'; end
       main_code :test, from_template: path
