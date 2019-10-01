@@ -1,9 +1,11 @@
 
 ### <%= anchor(anchor_id) %><%= register.name %>
 
-<% register.printables.each do |name, printable| %>
+<% register.printables.each do |name, values| %>
 * <%= name %>
-    * <%= printable || 'NA' %>
+    <% Array(values || [nil]).each do |value| %>
+    * <%= value || 'NA' %>
+    <% end %>
 <% end %>
 <% if register.bit_fields? %>
 

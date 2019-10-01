@@ -73,7 +73,7 @@ RSpec.describe 'register/markdown' do
           bit_field { name 'bit_field_1'; bit_assignment lsb: 1; type :ro }
           bit_field { name 'bit_field_2'; bit_assignment lsb: 2; type :wo; initial_value 0 }
           bit_field { name 'bit_field_3'; bit_assignment lsb: 8, width: 8; type :rw; initial_value 0xa }
-          bit_field { name 'bit_field_4'; bit_assignment lsb: 16, width: 8; type :ro }
+          bit_field { name 'bit_field_4'; bit_assignment lsb: 16, width: 8; type :ro; reference 'register_0.bit_field_5' }
           bit_field { name 'bit_field_5'; bit_assignment lsb: 24, width: 8; type :wo; initial_value 0xb }
         end
 
@@ -107,7 +107,7 @@ RSpec.describe 'register/markdown' do
           name 'register_4'
           offset_address 0x30
           size [4, 4]
-          type [:indirect, 'register_0.bit_field_3', 'register_0.bit_field_4']
+          type [:indirect, ['register_0.bit_field_0', 0], 'register_0.bit_field_3', 'register_0.bit_field_4']
           bit_field { name 'bit_field_0'; bit_assignment lsb: 0, width: 8; type :rw; initial_value 0 }
           bit_field { name 'bit_field_1'; bit_assignment lsb: 8, width: 8; type :ro }
           bit_field { name 'bit_field_2'; bit_assignment lsb: 16, width: 8; type :wo; initial_value 0 }
@@ -134,15 +134,17 @@ RSpec.describe 'register/markdown' do
             * 0x00 - 0x03
         * array_size
             * NA
+        * type
+            * default
 
-        |name|bit_assignments|type|initial_value|
-        |:--|:--|:--|:--|
-        |bit_field_0|[0]|rw|0x0|
-        |bit_field_1|[1]|ro||
-        |bit_field_2|[2]|wo|0x0|
-        |bit_field_3|[15:8]|rw|0x0a|
-        |bit_field_4|[23:16]|ro||
-        |bit_field_5|[31:24]|wo|0x0b|
+        |name|bit_assignments|type|initial_value|reference|
+        |:--|:--|:--|:--|:--|
+        |bit_field_0|[0]|rw|0x0||
+        |bit_field_1|[1]|ro|||
+        |bit_field_2|[2]|wo|0x0||
+        |bit_field_3|[15:8]|rw|0x0a||
+        |bit_field_4|[23:16]|ro||register_0.bit_field_5|
+        |bit_field_5|[31:24]|wo|0x0b||
       MARKDOWN
 
       expect(markdown[1]).to generate_code(:markdown, :top_down, <<~MARKDOWN)
@@ -155,12 +157,14 @@ RSpec.describe 'register/markdown' do
             * 0x04 - 0x0b
         * array_size
             * NA
+        * type
+            * default
 
-        |name|bit_assignments|type|initial_value|
-        |:--|:--|:--|:--|
-        |bit_field_0|[7:0]<br>[39:32]|rw|0x00|
-        |bit_field_1|[15:8]<br>[47:40]|ro||
-        |bit_field_2|[23:16]<br>[55:48]|wo|0x00|
+        |name|bit_assignments|type|initial_value|reference|
+        |:--|:--|:--|:--|:--|
+        |bit_field_0|[7:0]<br>[39:32]|rw|0x00||
+        |bit_field_1|[15:8]<br>[47:40]|ro|||
+        |bit_field_2|[23:16]<br>[55:48]|wo|0x00||
       MARKDOWN
 
       expect(markdown[2]).to generate_code(:markdown, :top_down, <<~MARKDOWN)
@@ -173,12 +177,14 @@ RSpec.describe 'register/markdown' do
             * 0x10 - 0x1f
         * array_size
             * [4]
+        * type
+            * default
 
-        |name|bit_assignments|type|initial_value|
-        |:--|:--|:--|:--|
-        |bit_field_0|[7:0]|rw|0x00|
-        |bit_field_1|[15:8]|ro||
-        |bit_field_2|[23:16]|wo|0x00|
+        |name|bit_assignments|type|initial_value|reference|
+        |:--|:--|:--|:--|:--|
+        |bit_field_0|[7:0]|rw|0x00||
+        |bit_field_1|[15:8]|ro|||
+        |bit_field_2|[23:16]|wo|0x00||
       MARKDOWN
 
       expect(markdown[3]).to generate_code(:markdown, :top_down, <<~MARKDOWN)
@@ -191,12 +197,14 @@ RSpec.describe 'register/markdown' do
             * 0x20 - 0x2f
         * array_size
             * [2, 2]
+        * type
+            * default
 
-        |name|bit_assignments|type|initial_value|
-        |:--|:--|:--|:--|
-        |bit_field_0|[7:0]|rw|0x00|
-        |bit_field_1|[15:8]|ro||
-        |bit_field_2|[23:16]|wo|0x00|
+        |name|bit_assignments|type|initial_value|reference|
+        |:--|:--|:--|:--|:--|
+        |bit_field_0|[7:0]|rw|0x00||
+        |bit_field_1|[15:8]|ro|||
+        |bit_field_2|[23:16]|wo|0x00||
       MARKDOWN
 
       expect(markdown[4]).to generate_code(:markdown, :top_down, <<~MARKDOWN)
@@ -209,12 +217,18 @@ RSpec.describe 'register/markdown' do
             * 0x30 - 0x33
         * array_size
             * [4, 4]
+        * type
+            * indirect
+        * index_bit_fields
+            * register_0.bit_field_0: 0
+            * register_0.bit_field_3
+            * register_0.bit_field_4
 
-        |name|bit_assignments|type|initial_value|
-        |:--|:--|:--|:--|
-        |bit_field_0|[7:0]|rw|0x00|
-        |bit_field_1|[15:8]|ro||
-        |bit_field_2|[23:16]|wo|0x00|
+        |name|bit_assignments|type|initial_value|reference|
+        |:--|:--|:--|:--|:--|
+        |bit_field_0|[7:0]|rw|0x00||
+        |bit_field_1|[15:8]|ro|||
+        |bit_field_2|[23:16]|wo|0x00||
       MARKDOWN
 
       expect(markdown[5]).to generate_code(:markdown, :top_down, <<~MARKDOWN)
@@ -227,6 +241,8 @@ RSpec.describe 'register/markdown' do
             * 0x40 - 0x4f
         * array_size
             * NA
+        * type
+            * external
       MARKDOWN
     end
   end
