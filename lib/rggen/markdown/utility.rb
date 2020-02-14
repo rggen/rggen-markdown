@@ -19,11 +19,8 @@ module RgGen
         "[#{text}](##{id})"
       end
 
-      def table(column_names, rows)
-        table = Ruport.Table(column_names) do |t|
-          rows.each { |row| t << row }
-        end
-        table.to_markdown(io: +'').chomp
+      def table(labels, rows)
+        TableFormatter.new.format(labels, rows)
       end
     end
   end

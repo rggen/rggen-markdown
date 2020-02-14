@@ -46,11 +46,30 @@ RSpec.describe RgGen::Markdown::Utility do
 
   describe '#table' do
     it 'Markdown形式の表を出力する' do
-      expect(md.send(:table, [:foo, :bar], [['foo 0', 'bar 0'], ['foo 1', 'bar 1']])).to eq <<~TABLE.chomp
+      table = md.send(:table, [:foo, :bar], [['foo 0', 'bar 0'], ['foo 1', 'bar 1']])
+      expect(table).to match_string <<~TABLE.chomp
         |foo|bar|
         |:--|:--|
         |foo 0|bar 0|
         |foo 1|bar 1|
+      TABLE
+    end
+
+    specify '改行コードは\'<br>\'に置換される' do
+      table = md.send(:table, [:foo, :bar, :baz], [["foo 0\nfoo 1", "\nbar 0\nbar 1", "baz 0\nbaz 1\n"]])
+      expect(table).to match_string <<~TABLE.chomp
+        |foo|bar|baz|
+        |:--|:--|:--|
+        |foo 0<br>foo 1|<br>bar 0<br>bar 1|baz 0<br>baz 1<br>|
+      TABLE
+    end
+
+    specify '垂直線は\'&#124;\'に置換される' do
+      table = md.send(:table, [:foo, :bar, :baz], [['foo 0|foo 1', '|bar 0|bar 1', 'baz 0|baz 1|']])
+      expect(table).to match_string <<~TABLE.chomp
+        |foo|bar|baz|
+        |:--|:--|:--|
+        |foo 0&#124;foo 1|&#124;bar 0&#124;bar 1|baz 0&#124;baz 1&#124;|
       TABLE
     end
   end
