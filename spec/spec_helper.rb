@@ -8,8 +8,9 @@ builder = RgGen::Core::Builder.create
 RgGen.builder(builder)
 
 require 'rggen/default_register_map'
-require 'rggen/spreadsheet_loader'
 RgGen::DefaultRegisterMap.default_setup(builder)
+
+require 'rggen/spreadsheet_loader'
 RgGen::SpreadsheetLoader.default_setup(builder)
 
 RSpec.configure do |config|
@@ -21,4 +22,7 @@ RgGen::Markdown.register_component(builder)
 RgGen::Markdown.load_features
 
 RGGEN_SAMPLE_DIRECTORY =
-  ENV['RGGEN_SAMPLE_DIRECTORY'] || '../rggen-sample'
+  File.join(
+    ENV['RGGEN_ROOT'] || File.expand_path('../..', __dir__),
+    'rggen-sample'
+  )
