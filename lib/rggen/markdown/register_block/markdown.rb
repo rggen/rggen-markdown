@@ -8,7 +8,7 @@ RgGen.define_simple_feature(:register_block, :markdown) do
 
     write_file '<%= register_block.name %>.md' do |file|
       file.body do |code|
-        register_block.generate_code(:markdown, :top_down, code)
+        register_block.generate_code(code, :markdown, :top_down)
       end
     end
 

@@ -18,10 +18,10 @@ module RgGen
     def self.register_component(builder)
       builder.output_component_registry(:markdown) do
         register_component [
-          :register_map, :register_block, :register, :bit_field
+          :root, :register_block, :register_file, :register, :bit_field
         ] do |category|
           component Component, ComponentFactory
-          feature Feature, FeatureFactory if category != :register_map
+          feature Feature, FeatureFactory if category != :root
         end
       end
     end

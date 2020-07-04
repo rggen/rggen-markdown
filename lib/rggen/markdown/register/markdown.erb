@@ -7,7 +7,7 @@
     * <%= value || 'NA' %>
     <% end %>
 <% end %>
-<% if register.bit_fields? %>
+<% unless register.bit_fields.empty? %>
 
 <%= bit_field_table %>
-<% end%>
+<% end %>

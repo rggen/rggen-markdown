@@ -2,11 +2,11 @@
 
 RSpec.describe RgGen::Markdown::Feature do
   let(:configuration) do
-    RgGen::Core::Configuration::Component.new('configuration', nil)
+    RgGen::Core::Configuration::Component.new(nil, 'configuration', nil)
   end
 
   let(:register_map) do
-    RgGen::Core::RegisterMap::Component.new('register_map', nil, configuration)
+    RgGen::Core::RegisterMap::Component.new(nil, 'register_map', nil, configuration)
   end
 
   def create_feature(component, &body)
@@ -19,12 +19,12 @@ RSpec.describe RgGen::Markdown::Feature do
     path = File.join(__dir__, 'foo.erb')
     allow(File).to receive(:binread).with(path).and_return('<%= object_id %> <%= foo %>')
 
-    component = RgGen::Markdown::Component.new('markdown', nil, configuration, register_map)
+    component = RgGen::Markdown::Component.new(nil, 'markdown', nil, configuration, register_map)
     feature = create_feature(component) do
       def foo; 'foo !'; end
       main_code :test, from_template: path
     end
 
-    expect(feature.generate_code(:main_code, :test)).to match_string("#{feature.object_id} foo !")
+    expect(component).to generate_code(:test, :top_down, "#{feature.object_id} foo !")
   end
 end
