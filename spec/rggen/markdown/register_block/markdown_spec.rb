@@ -4,11 +4,6 @@ RSpec.describe 'register_block/markdown' do
   include_context 'clean-up builder'
   include_context 'markdown common'
 
-  before(:all) do
-    RgGen.enable(:register_block, :markdown)
-    RgGen.enable(:register, :markdown)
-  end
-
   describe '#anchor_id' do
     before(:all) do
       delete_configuration_factory
@@ -17,10 +12,11 @@ RSpec.describe 'register_block/markdown' do
 
     before(:all) do
       RgGen.enable(:register_block, :name)
+      RgGen.enable(:register_block, :markdown)
     end
 
     after(:all) do
-      RgGen.disable(:register_block, :name)
+      RgGen.disable_all
     end
 
     let(:markdown) do
@@ -39,23 +35,14 @@ RSpec.describe 'register_block/markdown' do
     end
 
     before(:all) do
-      RgGen.enable(:global, [:bus_width, :address_width])
-      RgGen.enable(:register_block, [:name, :byte_size, :protocol])
-      RgGen.enable(:register_block, :protocol, :apb)
-      RgGen.enable(:register, [:name, :offset_address, :size, :type])
-      RgGen.enable(:register, :type, [:external, :indirect])
-      RgGen.enable(:bit_field, [:name, :bit_assignment, :type, :initial_value, :reference, :comment])
-      RgGen.enable(:bit_field, :type, [:rc, :reserved, :ro, :rof, :rs, :rw, :rwc, :rwe, :rwl, :rws, :w0c, :w1c, :w0s, :w1s, :w0crs, :w1crs, :w0src, :w1src, :w0trg, :w1trg, :wo, :w1, :wo1])
+      load_setup_files(RgGen.builder, [
+        File.join(RGGEN_ROOT, 'rggen-default-register-map/lib/rggen/default_register_map/setup.rb'),
+        File.join(RGGEN_MARKDOWN_ROOT, 'lib/rggen/markdown/setup.rb')
+      ])
     end
 
     after(:all) do
-      RgGen.disable(:global, [:bus_width, :address_width])
-      RgGen.disable(:register_block, [:name, :byte_size, :protocol])
-      RgGen.disable(:register_block, :protocol, :apb)
-      RgGen.disable(:register, [:name, :offset_address, :size, :type])
-      RgGen.disable(:register, :type, [:external, :indirect])
-      RgGen.disable(:bit_field, [:name, :bit_assignment, :type, :initial_value, :reference, :comment])
-      RgGen.disable(:bit_field, :type, [:rc, :reserved, :ro, :rof, :rs, :rw, :rwc, :rwe, :rwl, :rws, :w0c, :w1c, :w0s, :w1s, :w0crs, :w1crs, :w0src, :w1src, :w0trg, :w1trg, :wo, :w1, :wo1])
+      RgGen.disable_all
     end
 
     before do
@@ -69,25 +56,32 @@ RSpec.describe 'register_block/markdown' do
     end
 
     let(:register_map) do
-      file = ['block_0.rb', 'block_0.xlsx', 'block_0.yml'].sample
-      path = File.join(RGGEN_SAMPLE_DIRECTORY, file)
-      build_register_map_factory(RgGen.builder, false).create(configuration, [path])
+      file_0 = ['block_0.rb', 'block_0.yml', 'block_0.xlsx'].sample
+      file_1 = ['block_1.rb', 'block_1.yml'].sample
+      path = [file_0, file_1].map { |file| File.join(RGGEN_SAMPLE_DIRECTORY, file) }
+      build_register_map_factory(RgGen.builder, false).create(configuration, path)
     end
 
     let(:markdown) do
       build_markdown_factory(RgGen.builder)
-        .create(configuration, register_map).register_blocks.first
+        .create(configuration, register_map).register_blocks
     end
 
     let(:expected_code) do
-      path = File.join(RGGEN_SAMPLE_DIRECTORY, 'block_0.md')
-      File.binread(path)
+      ['block_0.md', 'block_1.md'].map do |file|
+        path = File.join(RGGEN_SAMPLE_DIRECTORY, file)
+        File.binread(path)
+      end
     end
 
     it 'Markdownを書き出す' do
       expect {
-        markdown.write_file('foo')
-      }.to write_file(match_string('foo/block_0.md'), expected_code)
+        markdown[0].write_file('foo')
+      }.to write_file(match_string('foo/block_0.md'), expected_code[0])
+
+      expect {
+        markdown[1].write_file('bar')
+      }.to write_file(match_string('bar/block_1.md'), expected_code[1])
     end
   end
 end

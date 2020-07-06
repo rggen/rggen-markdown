@@ -14,6 +14,15 @@ RSpec.describe RgGen::Markdown do
   end
 
   describe '既定セットアップ' do
+    before do
+      @original_builder = RgGen.builder
+      RgGen.builder(RgGen::Core::Builder.create)
+    end
+
+    after do
+      RgGen.builder(@original_builder)
+    end
+
     it 'フィーチャーの有効化を行う' do
       allow(RgGen::Markdown).to receive(:default_setup)
       expect(builder).to receive(:enable).with(:register_block, [:markdown])

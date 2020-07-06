@@ -21,8 +21,6 @@ require 'rggen/markdown'
 RgGen::Markdown.register_component(builder)
 RgGen::Markdown.load_features
 
-RGGEN_SAMPLE_DIRECTORY =
-  File.join(
-    ENV['RGGEN_ROOT'] || File.expand_path('../..', __dir__),
-    'rggen-sample'
-  )
+RGGEN_ROOT = ENV['RGGEN_ROOT'] || File.expand_path('../..', __dir__)
+RGGEN_MARKDOWN_ROOT = File.expand_path('..', __dir__)
+RGGEN_SAMPLE_DIRECTORY = File.join(RGGEN_ROOT, 'rggen-sample')

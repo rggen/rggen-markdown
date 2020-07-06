@@ -3,12 +3,23 @@
 RgGen.define_simple_feature(:register, :markdown) do
   markdown do
     export def anchor_id
-      [register_block.anchor_id, register.name].join('-')
+      [register_block, *register_files, register]
+        .map(&:name).join('-')
     end
 
     main_code :markdown, from_template: true
 
     private
+
+    def title
+      register.printables[:layer_name]
+    end
+
+    def register_printables
+      register.printables
+        .reject { |key, _| [:name, :layer_name].include?(key) }
+        .compact
+    end
 
     def bit_field_table
       column_names = bit_field_printables.first.keys
