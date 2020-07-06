@@ -8,7 +8,7 @@ RgGen.define_simple_feature(:register_block, :markdown) do
 
     write_file '<%= register_block.name %>.md' do |file|
       file.body do |code|
-        register_block.generate_code(:markdown, :top_down, code)
+        register_block.generate_code(code, :markdown, :top_down)
       end
     end
 
@@ -16,21 +16,28 @@ RgGen.define_simple_feature(:register_block, :markdown) do
 
     private
 
+    def title
+      register_block.name
+    end
+
+    def register_block_printables
+      register_block.printables
+        .reject { |key, _| key == :name }
+        .compact
+    end
+
     def register_table
-      table([:name, :offset_address], table_rows)
+      table([:name], table_rows)
     end
 
     def table_rows
-      register_block.registers
-        .zip(register_block.registers.map(&:printables))
-        .map { |register, printables| table_row(register, printables) }
+      register_block.registers.map(&method(:table_row))
     end
 
-    def table_row(register, printables)
-      [
-        anchor_link(printables[:name], register.anchor_id),
-        printables[:offset_address]
-      ]
+    def table_row(register)
+      name = register.printables[:layer_name]
+      id = register.anchor_id
+      [anchor_link(name, id)]
     end
   end
 end

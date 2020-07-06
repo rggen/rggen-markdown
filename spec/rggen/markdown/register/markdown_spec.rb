@@ -4,11 +4,6 @@ RSpec.describe 'register/markdown' do
   include_context 'clean-up builder'
   include_context 'markdown common'
 
-  before(:all) do
-    RgGen.enable(:register_block, :markdown)
-    RgGen.enable(:register, :markdown)
-  end
-
   describe '#anchor_id' do
     before(:all) do
       delete_configuration_factory
@@ -17,24 +12,34 @@ RSpec.describe 'register/markdown' do
 
     before(:all) do
       RgGen.enable(:register_block, :name)
+      RgGen.enable(:register_file, :name)
       RgGen.enable(:register, :name)
+      RgGen.enable(:register_block, :markdown)
+      RgGen.enable(:register, :markdown)
     end
 
     after(:all) do
-      RgGen.disable(:register_block, :name)
-      RgGen.disable(:register, :name)
+      RgGen.disable_all
     end
 
     let(:markdown) do
       md = create_markdown do
         name 'register_block'
         register { name 'register' }
+        register_file do
+          name 'register_file'
+          register_file do
+            name 'register_file'
+            register { name 'register' }
+          end
+        end
       end
-      md.registers.first
+      md.registers
     end
 
     it 'アンカー用IDとして、自身の#nameと上位階層の#anchor_idを連接したものを返す' do
-      expect(markdown.anchor_id).to eq 'register_block-register'
+      expect(markdown[0].anchor_id).to eq 'register_block-register'
+      expect(markdown[1].anchor_id).to eq 'register_block-register_file-register_file-register'
     end
   end
 
@@ -47,18 +52,17 @@ RSpec.describe 'register/markdown' do
     before(:all) do
       RgGen.enable(:global, [:bus_width, :address_width])
       RgGen.enable(:register_block, [:name, :byte_size])
+      RgGen.enable(:register_file, [:name, :offset_address, :size])
       RgGen.enable(:register, [:name, :offset_address, :size, :type])
       RgGen.enable(:register, :type, [:external, :indirect])
       RgGen.enable(:bit_field, [:name, :bit_assignment, :type, :initial_value, :reference])
       RgGen.enable(:bit_field, :type, [:rw, :ro, :wo])
+      RgGen.enable(:register_block, :markdown)
+      RgGen.enable(:register, :markdown)
     end
 
     after(:all) do
-      RgGen.disable(:global, [:bus_width, :address_width])
-      RgGen.disable(:register_block, [:name, :byte_size])
-      RgGen.disable(:register, [:name, :offset_address, :size, :type])
-      RgGen.disable(:bit_field, [:name, :bit_assignment, :type, :initial_value, :reference])
-      RgGen.disable(:bit_field, :type, [:rw, :ro, :wo])
+      RgGen.disable_all
     end
 
     let(:markdown) do
@@ -119,6 +123,32 @@ RSpec.describe 'register/markdown' do
           size [4]
           type :external
         end
+
+        register_file do
+          name 'register_file_6'
+          offset_address 0x50
+          register do
+            name 'register_0'
+            offset_address 0x00
+            bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
+          end
+        end
+
+        register_file do
+          name 'register_file_7'
+          offset_address 0x60
+          size [2]
+          register_file do
+            name 'register_file_0'
+            offset_address 0x00
+            register do
+              name 'register_0'
+              offset_address 0x10
+              size [2]
+              bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
+            end
+          end
+        end
       end
       md.registers
     end
@@ -128,12 +158,8 @@ RSpec.describe 'register/markdown' do
 
         ### <div id="block_0-register_0"></div>register_0
 
-        * name
-            * register_0
         * offset_address
-            * 0x00 - 0x03
-        * array_size
-            * NA
+            * 0x00
         * type
             * default
 
@@ -151,32 +177,27 @@ RSpec.describe 'register/markdown' do
 
         ### <div id="block_0-register_1"></div>register_1
 
-        * name
-            * register_1
         * offset_address
-            * 0x04 - 0x0b
-        * array_size
-            * NA
+            * 0x04
         * type
             * default
 
         |name|bit_assignments|type|initial_value|reference|
         |:--|:--|:--|:--|:--|
-        |bit_field_0|[7:0]<br>[39:32]|rw|0x00||
-        |bit_field_1|[15:8]<br>[47:40]|ro|||
-        |bit_field_2|[23:16]<br>[55:48]|wo|0x00||
+        |bit_field_0[2]|[7:0]<br>[39:32]|rw|0x00||
+        |bit_field_1[2]|[15:8]<br>[47:40]|ro|||
+        |bit_field_2[2]|[23:16]<br>[55:48]|wo|0x00||
       MARKDOWN
 
       expect(markdown[2]).to generate_code(:markdown, :top_down, <<~MARKDOWN)
 
-        ### <div id="block_0-register_2"></div>register_2
+        ### <div id="block_0-register_2"></div>register_2[4]
 
-        * name
-            * register_2
         * offset_address
-            * 0x10 - 0x1f
-        * array_size
-            * [4]
+            * 0x10
+            * 0x14
+            * 0x18
+            * 0x1c
         * type
             * default
 
@@ -189,14 +210,13 @@ RSpec.describe 'register/markdown' do
 
       expect(markdown[3]).to generate_code(:markdown, :top_down, <<~MARKDOWN)
 
-        ### <div id="block_0-register_3"></div>register_3
+        ### <div id="block_0-register_3"></div>register_3[2][2]
 
-        * name
-            * register_3
         * offset_address
-            * 0x20 - 0x2f
-        * array_size
-            * [2, 2]
+            * 0x20
+            * 0x24
+            * 0x28
+            * 0x2c
         * type
             * default
 
@@ -209,14 +229,10 @@ RSpec.describe 'register/markdown' do
 
       expect(markdown[4]).to generate_code(:markdown, :top_down, <<~MARKDOWN)
 
-        ### <div id="block_0-register_4"></div>register_4
+        ### <div id="block_0-register_4"></div>register_4[4][4]
 
-        * name
-            * register_4
         * offset_address
-            * 0x30 - 0x33
-        * array_size
-            * [4, 4]
+            * 0x30
         * type
             * indirect
         * index_bit_fields
@@ -235,14 +251,43 @@ RSpec.describe 'register/markdown' do
 
         ### <div id="block_0-register_5"></div>register_5
 
-        * name
-            * register_5
         * offset_address
-            * 0x40 - 0x4f
-        * array_size
-            * NA
+            * 0x40
         * type
             * external
+        * byte_size
+            * 16 bytes
+      MARKDOWN
+
+      expect(markdown[6]).to generate_code(:markdown, :top_down, <<~MARKDOWN)
+
+        ### <div id="block_0-register_file_6-register_0"></div>register_file_6.register_0
+
+        * offset_address
+            * 0x50
+        * type
+            * default
+
+        |name|bit_assignments|type|initial_value|reference|
+        |:--|:--|:--|:--|:--|
+        |bit_field_0|[0]|rw|0x0||
+      MARKDOWN
+
+      expect(markdown[7]).to generate_code(:markdown, :top_down, <<~MARKDOWN)
+
+        ### <div id="block_0-register_file_7-register_file_0-register_0"></div>register_file_7[2].register_file_0.register_0[2]
+
+        * offset_address
+            * 0x70
+            * 0x74
+            * 0x88
+            * 0x8c
+        * type
+            * default
+
+        |name|bit_assignments|type|initial_value|reference|
+        |:--|:--|:--|:--|:--|
+        |bit_field_0|[0]|rw|0x0||
       MARKDOWN
     end
   end

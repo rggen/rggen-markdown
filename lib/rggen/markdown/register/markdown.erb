@@ -1,13 +1,13 @@
 
-### <%= anchor(anchor_id) %><%= register.name %>
+### <%= anchor(anchor_id) %><%= title %>
 
-<% register.printables.each do |name, values| %>
+<% register_printables.each do |name, value_or_values| %>
 * <%= name %>
-    <% Array(values || [nil]).each do |value| %>
-    * <%= value || 'NA' %>
+    <% Array(value_or_values).each do |value| %>
+    * <%= value %>
     <% end %>
 <% end %>
-<% if register.bit_fields? %>
+<% unless register.bit_fields.empty? %>
 
 <%= bit_field_table %>
-<% end%>
+<% end %>
