@@ -5,18 +5,6 @@ RSpec.describe RgGen::Markdown::Utility do
     Class.new { include RgGen::Markdown::Utility }.new
   end
 
-  let(:component) do
-    configuration = RgGen::Core::Configuration::Component.new(nil)
-    register_map = RgGen::Core::RegisterMap::Component.new(nil, configuration)
-    RgGen::Markdown::Component.new(nil, configuration, register_map)
-  end
-
-  def create_feature(&body)
-    Class.new(RgGen::Markdown::Feature, &body).new(component, :foo) do |f|
-      component.add_feature(f)
-    end
-  end
-
   describe '#create_blank_file' do
     it '空のソースファイルオブジェクトを生成する' do
       source_file = md.create_blank_file('foo.md')
