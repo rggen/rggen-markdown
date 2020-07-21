@@ -37,6 +37,7 @@ RSpec.describe 'register_block/markdown' do
     before(:all) do
       load_setup_files(RgGen.builder, [
         File.join(RGGEN_ROOT, 'rggen-default-register-map/lib/rggen/default_register_map/setup.rb'),
+        File.join(RGGEN_ROOT, 'rggen-spreadsheet-loader/lib/rggen/spreadsheet_loader/setup.rb'),
         File.join(RGGEN_MARKDOWN_ROOT, 'lib/rggen/markdown/setup.rb')
       ])
     end
@@ -56,7 +57,7 @@ RSpec.describe 'register_block/markdown' do
     end
 
     let(:register_map) do
-      file_0 = ['block_0.rb', 'block_0.yml', 'block_0.xlsx'].sample
+      file_0 = ['block_0.xlsx'].sample
       file_1 = ['block_1.rb', 'block_1.yml'].sample
       path = [file_0, file_1].map { |file| File.join(RGGEN_SAMPLE_DIRECTORY, file) }
       build_register_map_factory(RgGen.builder, false).create(configuration, path)
