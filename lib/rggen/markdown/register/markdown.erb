@@ -4,7 +4,7 @@
 <% register_printables.each do |name, value_or_values| %>
 * <%= name %>
     <% Array(value_or_values).each do |value| %>
-    * <%= value %>
+    * <%= trim_space(value) %>
     <% end %>
 <% end %>
 <% unless register.bit_fields.empty? %>

@@ -19,6 +19,10 @@ module RgGen
         "[#{text}](##{id})"
       end
 
+      def trim_space(string)
+        string.to_s.split(newline).map(&:strip).reject(&:empty?).join('<br>')
+      end
+
       def table(labels, rows)
         TableFormatter.new.format(labels, rows)
       end

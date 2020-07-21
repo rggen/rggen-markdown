@@ -52,8 +52,8 @@ RSpec.describe 'register/markdown' do
     before(:all) do
       RgGen.enable(:global, [:bus_width, :address_width])
       RgGen.enable(:register_block, [:name, :byte_size])
-      RgGen.enable(:register_file, [:name, :offset_address, :size])
-      RgGen.enable(:register, [:name, :offset_address, :size, :type])
+      RgGen.enable(:register_file, [:name, :offset_address, :size, :comment])
+      RgGen.enable(:register, [:name, :offset_address, :size, :type, :comment])
       RgGen.enable(:register, :type, [:external, :indirect])
       RgGen.enable(:bit_field, [:name, :bit_assignment, :type, :initial_value, :reference])
       RgGen.enable(:bit_field, :type, [:rw, :ro, :wo])
@@ -73,6 +73,7 @@ RSpec.describe 'register/markdown' do
         register do
           name 'register_0'
           offset_address 0x00
+          comment 'this is register_0'
           bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
           bit_field { name 'bit_field_1'; bit_assignment lsb: 1; type :ro }
           bit_field { name 'bit_field_2'; bit_assignment lsb: 2; type :wo; initial_value 0 }
@@ -84,6 +85,7 @@ RSpec.describe 'register/markdown' do
         register do
           name 'register_1'
           offset_address 0x04
+          comment ['this', 'is', 'register_1']
           bit_field { name 'bit_field_0'; bit_assignment lsb: 0, width: 8, sequence_size: 2, step: 32; type :rw; initial_value 0 }
           bit_field { name 'bit_field_1'; bit_assignment lsb: 8, width: 8, sequence_size: 2, step: 32; type :ro }
           bit_field { name 'bit_field_2'; bit_assignment lsb: 16, width: 8, sequence_size: 2, step: 32; type :wo; initial_value 0 }
@@ -127,8 +129,10 @@ RSpec.describe 'register/markdown' do
         register_file do
           name 'register_file_6'
           offset_address 0x50
+          comment 'this is register_file_6'
           register do
             name 'register_0'
+            comment 'this is register_0'
             offset_address 0x00
             bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
           end
@@ -162,6 +166,8 @@ RSpec.describe 'register/markdown' do
             * 0x00
         * type
             * default
+        * comment
+            * this is register_0
 
         |name|bit_assignments|type|initial_value|reference|
         |:--|:--|:--|:--|:--|
@@ -181,6 +187,8 @@ RSpec.describe 'register/markdown' do
             * 0x04
         * type
             * default
+        * comment
+            * this<br>is<br>register_1
 
         |name|bit_assignments|type|initial_value|reference|
         |:--|:--|:--|:--|:--|
@@ -267,6 +275,8 @@ RSpec.describe 'register/markdown' do
             * 0x50
         * type
             * default
+        * comment
+            * this is register_0
 
         |name|bit_assignments|type|initial_value|reference|
         |:--|:--|:--|:--|:--|

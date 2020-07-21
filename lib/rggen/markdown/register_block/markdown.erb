@@ -2,7 +2,7 @@
 
 <% register_block_printables.each do |name, printable| %>
 * <%= name %>
-    * <%= printable %>
+    * <%= trim_space(printable) %>
 <% end %>
 
 <%= register_table %>
