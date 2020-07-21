@@ -32,6 +32,21 @@ RSpec.describe RgGen::Markdown::Utility do
     end
   end
 
+  describe '#trim_space' do
+    it '改行コードを<br>に置換する' do
+      expect(md.send(:trim_space, 'foo')).to eq 'foo'
+      expect(md.send(:trim_space, "foo\nbar")).to eq 'foo<br>bar'
+      expect(md.send(:trim_space, "foo\nbar\nbaz")).to eq 'foo<br>bar<br>baz'
+    end
+
+    it '行頭/行末の空白を取り除く' do
+      expect(md.send(:trim_space, '  foo')).to eq 'foo'
+      expect(md.send(:trim_space, 'foo  ')).to eq 'foo'
+      expect(md.send(:trim_space, "foo  \n  bar  \n  ")).to eq 'foo<br>bar'
+      expect(md.send(:trim_space, 'foo  bar')).to eq 'foo  bar'
+    end
+  end
+
   describe '#table' do
     it 'Markdown形式の表を出力する' do
       table = md.send(:table, [:foo, :bar], [['foo 0', 'bar 0'], ['foo 1', 'bar 1']])
