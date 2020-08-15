@@ -10,6 +10,8 @@ require_relative 'markdown/factories'
 
 module RgGen
   module Markdown
+    PLUGIN_NAME = :'rggen-markdown'
+
     FEATURES = [
       'markdown/register/markdown',
       'markdown/register_block/markdown'

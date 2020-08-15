@@ -2,7 +2,7 @@
 
 require 'rggen/markdown'
 
-RgGen.setup :'rggen-markdown', RgGen::Markdown do |builder|
+RgGen.setup RgGen::Markdown do |builder|
   builder.enable :register_block, [:markdown]
   builder.enable :register, [:markdown]
 end
