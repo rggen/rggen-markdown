@@ -5,14 +5,6 @@ RSpec.describe RgGen::Markdown do
 
   let(:builder) { RgGen.builder }
 
-  describe '.default_setup' do
-    it '.register_component/.load_featuresを呼び出す' do
-      expect(RgGen::Markdown).to receive(:register_component)
-      expect(RgGen::Markdown).to receive(:load_features)
-      RgGen::Markdown.default_setup(builder)
-    end
-  end
-
   describe '既定セットアップ' do
     before do
       @original_builder = RgGen.builder
@@ -24,7 +16,7 @@ RSpec.describe RgGen::Markdown do
     end
 
     it 'フィーチャーの有効化を行う' do
-      allow(RgGen::Markdown).to receive(:default_setup)
+      expect(RgGen::Markdown.plugin_spec).to receive(:activate).with(equal(builder))
       expect(builder).to receive(:enable).with(:register_block, [:markdown])
       expect(builder).to receive(:enable).with(:register, [:markdown])
       builder.load_plugins(['rggen/markdown/setup'], true)
