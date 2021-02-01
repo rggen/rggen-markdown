@@ -16,9 +16,7 @@ RgGen.define_simple_feature(:register, :markdown) do
     end
 
     def register_printables
-      register.printables
-        .reject { |key, _| [:name, :layer_name].include?(key) }
-        .compact
+      register.printables.except(:name, :layer_name).compact
     end
 
     def bit_field_table

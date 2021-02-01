@@ -18,11 +18,9 @@ module RgGen
         private
 
         def build_md_lines(labels, table)
-          lines = []
-          build_md_line(lines, labels)
-          build_md_line(lines, alignment_marks(labels.size))
-          table.each { |row| build_md_line(lines, row) }
-          lines
+          [
+            labels, alignment_marks(labels.size), *table
+          ].each_with_object([]) { |row, lines| build_md_line(lines, row) }
         end
 
         def build_md_line(lines, row)
