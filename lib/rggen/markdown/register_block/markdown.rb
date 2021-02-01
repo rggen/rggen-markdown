@@ -21,9 +21,7 @@ RgGen.define_simple_feature(:register_block, :markdown) do
     end
 
     def register_block_printables
-      register_block.printables
-        .reject { |key, _| key == :name }
-        .compact
+      register_block.printables.except(:name).compact
     end
 
     def register_table
