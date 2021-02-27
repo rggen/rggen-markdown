@@ -2,7 +2,7 @@
 
 module RgGen
   module Markdown
-    class ComponentFactory < Core::OutputBase::ComponentFactory
+    class ComponentFactory < Core::OutputBase::DocumentComponentFactory
     end
 
     class FeatureFactory < Core::OutputBase::FeatureFactory
