@@ -25,7 +25,7 @@ RgGen.define_simple_feature(:register_block, :markdown) do
     end
 
     def register_table
-      table([:name], table_rows)
+      table([:name, :offset_address], table_rows)
     end
 
     def table_rows
@@ -35,7 +35,8 @@ RgGen.define_simple_feature(:register_block, :markdown) do
     def table_row(register)
       name = register.printables[:layer_name]
       id = register.anchor_id
-      [anchor_link(name, id)]
+      offset_address = register.printables[:offset_address].join("\n")
+      [anchor_link(name, id), offset_address]
     end
   end
 end
