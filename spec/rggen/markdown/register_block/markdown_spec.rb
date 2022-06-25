@@ -16,7 +16,7 @@ RSpec.describe 'register_block/markdown' do
     end
 
     after(:all) do
-      RgGen.disable_all
+      RgGen.enable_all
     end
 
     let(:markdown) do
@@ -35,15 +35,7 @@ RSpec.describe 'register_block/markdown' do
     end
 
     before(:all) do
-      load_setup_files(RgGen.builder, [
-        File.join(RGGEN_ROOT, 'rggen-default-register-map/lib/rggen/default_register_map/setup.rb'),
-        File.join(RGGEN_ROOT, 'rggen-spreadsheet-loader/lib/rggen/spreadsheet_loader/setup.rb'),
-        File.join(RGGEN_MARKDOWN_ROOT, 'lib/rggen/markdown/setup.rb')
-      ])
-    end
-
-    after(:all) do
-      RgGen.disable_all
+      RgGen.enable_all
     end
 
     before do
