@@ -8,20 +8,18 @@ require_relative 'markdown/component'
 require_relative 'markdown/feature'
 require_relative 'markdown/factories'
 
-module RgGen
-  module Markdown
-    extend Core::Plugin
+RgGen.setup_plugin :'rggen-markdown' do |plugin|
+  plugin.version RgGen::Markdown::VERSION
 
-    setup_plugin :'rggen-markdown' do |plugin|
-      plugin.register_component :markdown do
-        component Component, ComponentFactory
-        feature Feature, FeatureFactory
-      end
-
-      plugin.files [
-        'markdown/register/markdown',
-        'markdown/register_block/markdown'
-      ]
-    end
+  plugin.register_component :markdown do
+    component RgGen::Markdown::Component,
+              RgGen::Markdown::ComponentFactory
+    feature RgGen::Markdown::Feature,
+            RgGen::Markdown::FeatureFactory
   end
+
+  plugin.files [
+    'markdown/register_block/markdown',
+    'markdown/register/markdown'
+  ]
 end

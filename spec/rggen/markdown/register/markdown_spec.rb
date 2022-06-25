@@ -19,7 +19,7 @@ RSpec.describe 'register/markdown' do
     end
 
     after(:all) do
-      RgGen.disable_all
+      RgGen.enable_all
     end
 
     let(:markdown) do
@@ -62,7 +62,7 @@ RSpec.describe 'register/markdown' do
     end
 
     after(:all) do
-      RgGen.disable_all
+      RgGen.enable_all
     end
 
     let(:markdown) do
