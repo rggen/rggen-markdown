@@ -2,6 +2,6 @@
 
 module RgGen
   module Markdown
-    VERSION = '0.22.0'
+    VERSION = '0.23.0'
   end
 end
