@@ -17,7 +17,7 @@ During RgGen installation, RgGen::Markdown will also be installed automatically.
 $ gem install rggen
 ```
 
-If you to install RgGen::Markdown only, use the command below:
+If you want to install RgGen::Markdown only, use the command below:
 
 ```
 $ gem install rggen-markdown
@@ -27,7 +27,8 @@ $ gem install rggen-markdown
 
 Feedbacks, bug reports, questions and etc. are wellcome! You can post them by using following ways:
 
-* [GitHub Issue Tracker](https://github.com/rggen/rggen-markdown/issues)
+* [GitHub Issue Tracker](https://github.com/rggen/rggen/issues)
+* [GitHub Discussions](https://github.com/rggen/rggen/discussions)
 * [Chat Room](https://gitter.im/rggen/rggen)
 * [Mailing List](https://groups.google.com/d/forum/rggen)
 * [Mail](mailto:rggen@googlegroups.com)
