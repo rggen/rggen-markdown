@@ -241,6 +241,21 @@ RSpec.describe 'register/markdown' do
 
         * offset_address
             * 0x30
+            * 0x30
+            * 0x30
+            * 0x30
+            * 0x30
+            * 0x30
+            * 0x30
+            * 0x30
+            * 0x30
+            * 0x30
+            * 0x30
+            * 0x30
+            * 0x30
+            * 0x30
+            * 0x30
+            * 0x30
         * type
             * indirect
         * index_bit_fields
