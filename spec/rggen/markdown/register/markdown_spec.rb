@@ -112,8 +112,7 @@ RSpec.describe 'register/markdown' do
         register do
           name 'register_4'
           offset_address 0x30
-          size [4, 4]
-          type [:indirect, ['register_0.bit_field_0', 0], 'register_0.bit_field_3', 'register_0.bit_field_4']
+          size [2, step: 8]
           bit_field { name 'bit_field_0'; bit_assignment lsb: 0, width: 8; type :rw; initial_value 0 }
           bit_field { name 'bit_field_1'; bit_assignment lsb: 8, width: 8; type :ro }
           bit_field { name 'bit_field_2'; bit_assignment lsb: 16, width: 8; type :wo; initial_value 0 }
@@ -122,13 +121,23 @@ RSpec.describe 'register/markdown' do
         register do
           name 'register_5'
           offset_address 0x40
+          size [4, 4]
+          type [:indirect, ['register_0.bit_field_0', 0], 'register_0.bit_field_3', 'register_0.bit_field_4']
+          bit_field { name 'bit_field_0'; bit_assignment lsb: 0, width: 8; type :rw; initial_value 0 }
+          bit_field { name 'bit_field_1'; bit_assignment lsb: 8, width: 8; type :ro }
+          bit_field { name 'bit_field_2'; bit_assignment lsb: 16, width: 8; type :wo; initial_value 0 }
+        end
+
+        register do
+          name 'register_6'
+          offset_address 0x50
           size [4]
           type :external
         end
 
         register_file do
-          name 'register_file_6'
-          offset_address 0x50
+          name 'register_file_7'
+          offset_address 0x60
           comment 'this is register_file_6'
           register do
             name 'register_0'
@@ -139,8 +148,8 @@ RSpec.describe 'register/markdown' do
         end
 
         register_file do
-          name 'register_file_7'
-          offset_address 0x60
+          name 'register_file_8'
+          offset_address 0x70
           size [2]
           register_file do
             name 'register_file_0'
@@ -149,6 +158,22 @@ RSpec.describe 'register/markdown' do
               name 'register_0'
               offset_address 0x10
               size [2]
+              bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
+            end
+          end
+        end
+
+        register_file do
+          name 'register_file_9'
+          offset_address 0xa0
+          size [2, step: 32]
+          register_file do
+            name 'register_file_0'
+            offset_address 0x00
+            register do
+              name 'register_0'
+              offset_address 0x00
+              size [2, step: 8]
               bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
             end
           end
@@ -237,25 +262,42 @@ RSpec.describe 'register/markdown' do
 
       expect(markdown[4]).to generate_code(:markdown, :top_down, <<~MARKDOWN)
 
-        ### <div id="block_0-register_4"></div>register_4[4][4]
+        ### <div id="block_0-register_4"></div>register_4[2]
 
         * offset_address
             * 0x30
-            * 0x30
-            * 0x30
-            * 0x30
-            * 0x30
-            * 0x30
-            * 0x30
-            * 0x30
-            * 0x30
-            * 0x30
-            * 0x30
-            * 0x30
-            * 0x30
-            * 0x30
-            * 0x30
-            * 0x30
+            * 0x38
+        * type
+            * default
+
+        |name|bit_assignments|type|initial_value|reference|
+        |:--|:--|:--|:--|:--|
+        |bit_field_0|[7:0]|rw|0x00||
+        |bit_field_1|[15:8]|ro|||
+        |bit_field_2|[23:16]|wo|0x00||
+      MARKDOWN
+
+      expect(markdown[5]).to generate_code(:markdown, :top_down, <<~MARKDOWN)
+
+        ### <div id="block_0-register_5"></div>register_5[4][4]
+
+        * offset_address
+            * 0x40
+            * 0x40
+            * 0x40
+            * 0x40
+            * 0x40
+            * 0x40
+            * 0x40
+            * 0x40
+            * 0x40
+            * 0x40
+            * 0x40
+            * 0x40
+            * 0x40
+            * 0x40
+            * 0x40
+            * 0x40
         * type
             * indirect
         * index_bit_fields
@@ -270,24 +312,24 @@ RSpec.describe 'register/markdown' do
         |bit_field_2|[23:16]|wo|0x00||
       MARKDOWN
 
-      expect(markdown[5]).to generate_code(:markdown, :top_down, <<~MARKDOWN)
+      expect(markdown[6]).to generate_code(:markdown, :top_down, <<~MARKDOWN)
 
-        ### <div id="block_0-register_5"></div>register_5
+        ### <div id="block_0-register_6"></div>register_6
 
         * offset_address
-            * 0x40
+            * 0x50
         * type
             * external
         * byte_size
             * 16 bytes
       MARKDOWN
 
-      expect(markdown[6]).to generate_code(:markdown, :top_down, <<~MARKDOWN)
+      expect(markdown[7]).to generate_code(:markdown, :top_down, <<~MARKDOWN)
 
-        ### <div id="block_0-register_file_6-register_0"></div>register_file_6.register_0
+        ### <div id="block_0-register_file_7-register_0"></div>register_file_7.register_0
 
         * offset_address
-            * 0x50
+            * 0x60
         * type
             * default
         * comment
@@ -298,15 +340,32 @@ RSpec.describe 'register/markdown' do
         |bit_field_0|[0]|rw|0x0||
       MARKDOWN
 
-      expect(markdown[7]).to generate_code(:markdown, :top_down, <<~MARKDOWN)
+      expect(markdown[8]).to generate_code(:markdown, :top_down, <<~MARKDOWN)
 
-        ### <div id="block_0-register_file_7-register_file_0-register_0"></div>register_file_7[2].register_file_0.register_0[2]
+        ### <div id="block_0-register_file_8-register_file_0-register_0"></div>register_file_8[2].register_file_0.register_0[2]
 
         * offset_address
-            * 0x70
-            * 0x74
-            * 0x88
-            * 0x8c
+            * 0x80
+            * 0x84
+            * 0x98
+            * 0x9c
+        * type
+            * default
+
+        |name|bit_assignments|type|initial_value|reference|
+        |:--|:--|:--|:--|:--|
+        |bit_field_0|[0]|rw|0x0||
+      MARKDOWN
+
+      expect(markdown[9]).to generate_code(:markdown, :top_down, <<~MARKDOWN)
+
+        ### <div id="block_0-register_file_9-register_file_0-register_0"></div>register_file_9[2].register_file_0.register_0[2]
+
+        * offset_address
+            * 0xa0
+            * 0xa8
+            * 0xc0
+            * 0xc8
         * type
             * default
 
