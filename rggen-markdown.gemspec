@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.email = ['rggen@googlegroups.com']
 
   spec.summary = "rggen-markdown-#{RgGen::Markdown::VERSION}"
-  spec.description = <<~'DESCRIPTION'
+  spec.description = <<~DESCRIPTION
     Markdown generator for RgGen.
   DESCRIPTION
   spec.homepage = 'https://github.com/rggen/rggen-markdown'
@@ -28,6 +28,4 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.required_ruby_version = '>= 2.7'
-
-  spec.add_development_dependency 'bundler'
 end
