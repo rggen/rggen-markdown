@@ -27,5 +27,5 @@ Gem::Specification.new do |spec|
     `git ls-files lib LICENSE CODE_OF_CONDUCT.mkd README.md`.split($RS)
   spec.require_paths = ['lib']
 
-  spec.required_ruby_version = '>= 3.0'
+  spec.required_ruby_version = Gem::Requirement.new('>= 3.0')
 end
