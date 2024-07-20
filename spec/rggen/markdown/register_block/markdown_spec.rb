@@ -35,7 +35,14 @@ RSpec.describe 'register_block/markdown' do
     end
 
     before(:all) do
+      RgGen.define_simple_feature(:register_block, :protocol) do
+        configuration { build {} }
+      end
       RgGen.enable_all
+    end
+
+    after(:all) do
+      RgGen.delete(:register_block, :protocol)
     end
 
     before do
