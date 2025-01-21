@@ -10,9 +10,6 @@ RgGen.builder(builder)
 require 'rggen/default_register_map'
 builder.plugin_manager.activate_plugin_by_name(:'rggen-default-register-map')
 
-require 'rggen/spreadsheet_loader'
-builder.plugin_manager.activate_plugin_by_name(:'rggen-spreadsheet-loader')
-
 RSpec.configure do |config|
   RgGen::Devtools::SpecHelper.setup(config)
 end
