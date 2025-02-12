@@ -301,9 +301,9 @@ RSpec.describe 'register/markdown' do
         * type
             * indirect
         * index_bit_fields
-            * register_0.bit_field_0: 0
             * register_0.bit_field_3
             * register_0.bit_field_4
+            * register_0.bit_field_0: 0
 
         |name|bit_assignments|type|initial_value|reference|
         |:--|:--|:--|:--|:--|
