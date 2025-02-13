@@ -1,6 +1,6 @@
 [![Gem Version](https://badge.fury.io/rb/rggen-markdown.svg)](https://badge.fury.io/rb/rggen-markdown)
 [![CI](https://github.com/rggen/rggen-markdown/workflows/CI/badge.svg)](https://github.com/rggen/rggen-markdown/actions?query=workflow%3ACI)
-[![Maintainability](https://api.codeclimate.com/v1/badges/5bbd7d84fefb30c5ee9a/maintainability)](https://codeclimate.com/github/rggen/rggen-markdown/maintainability)
+[![Maintainability](https://qlty.sh/badges/c7a4da9b-9276-459d-adc0-89582cb7d4cf/maintainability.svg)](https://qlty.sh/gh/rggen/projects/rggen-markdown)
 [![codecov](https://codecov.io/gh/rggen/rggen-markdown/branch/master/graph/badge.svg)](https://codecov.io/gh/rggen/rggen-markdown)
 [![Gitter](https://badges.gitter.im/rggen/rggen.svg)](https://gitter.im/rggen/rggen?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
