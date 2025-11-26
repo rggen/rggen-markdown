@@ -283,26 +283,11 @@ RSpec.describe 'register/markdown' do
 
         * offset_address
             * 0x40
-            * 0x40
-            * 0x40
-            * 0x40
-            * 0x40
-            * 0x40
-            * 0x40
-            * 0x40
-            * 0x40
-            * 0x40
-            * 0x40
-            * 0x40
-            * 0x40
-            * 0x40
-            * 0x40
-            * 0x40
         * type
             * indirect
         * index_bit_fields
-            * register_0.bit_field_3
-            * register_0.bit_field_4
+            * register_0.bit_field_3: [0-3]
+            * register_0.bit_field_4: [0-3]
             * register_0.bit_field_0: 0
 
         |name|bit_assignments|type|initial_value|reference|
