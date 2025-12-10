@@ -11,12 +11,9 @@ RSpec.describe 'register_block/markdown' do
     end
 
     before(:all) do
+      RgGen.disable_all
       RgGen.enable(:register_block, :name)
       RgGen.enable(:register_block, :markdown)
-    end
-
-    after(:all) do
-      RgGen.enable_all
     end
 
     let(:markdown) do
@@ -35,9 +32,11 @@ RSpec.describe 'register_block/markdown' do
     end
 
     before(:all) do
+      RgGen.disable_all
       RgGen.define_simple_feature(:register_block, :protocol) do
         configuration { build {} }
       end
+
       RgGen.enable_all
     end
 

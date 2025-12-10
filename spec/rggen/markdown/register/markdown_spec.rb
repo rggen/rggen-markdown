@@ -11,15 +11,12 @@ RSpec.describe 'register/markdown' do
     end
 
     before(:all) do
+      RgGen.disable_all
       RgGen.enable(:register_block, :name)
       RgGen.enable(:register_file, :name)
       RgGen.enable(:register, :name)
       RgGen.enable(:register_block, :markdown)
       RgGen.enable(:register, :markdown)
-    end
-
-    after(:all) do
-      RgGen.enable_all
     end
 
     let(:markdown) do
@@ -50,6 +47,7 @@ RSpec.describe 'register/markdown' do
     end
 
     before(:all) do
+      RgGen.disable_all
       RgGen.enable(:global, [:address_width, :enable_wide_register])
       RgGen.enable(:register_block, [:name, :byte_size, :bus_width])
       RgGen.enable(:register_file, [:name, :offset_address, :size, :comment])
@@ -59,10 +57,6 @@ RSpec.describe 'register/markdown' do
       RgGen.enable(:bit_field, :type, [:rw, :ro, :wo])
       RgGen.enable(:register_block, :markdown)
       RgGen.enable(:register, :markdown)
-    end
-
-    after(:all) do
-      RgGen.enable_all
     end
 
     let(:markdown) do
